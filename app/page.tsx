@@ -12,7 +12,7 @@ import {
 
 import { MyMapComponent } from "./TestMaps/MyMapbox";
 import { MyMapboxPopup } from "./TestMaps/MyMapboxPopup";
-import { MyMapboxGeofence } from "./TestMaps/MyMapboxGeofence";
+// import { MyMapboxGeofence } from "./TestMaps/MyMapboxGeofence.nottsx";
 import { MyMapboxPopupWithLayers } from "./TestMaps/MyMapboxPopupWithLayers";
 import { MyMapboxDynamicLayer } from "./TestMaps/MyMapboxPopupDynamicLayers";
 
@@ -57,7 +57,7 @@ const SidebarControls = ({ currentMap, setMapType }: SidebarControlsProps) => {
       >
         Show PopupWithDyanmicLayers Map
       </button>
-      <button
+      {/* <button
         onClick={() => setMapType("Geofence")}
         disabled={currentMap === "Geofence"}
         style={{
@@ -68,7 +68,7 @@ const SidebarControls = ({ currentMap, setMapType }: SidebarControlsProps) => {
         }}
       >
         Show Geofence Map
-      </button>
+      </button> */}
       <button
         onClick={() => setMapType("Basic")}
         disabled={currentMap === "Basic"}
@@ -113,8 +113,8 @@ const MyApp = function () {
     switch (mapType) {
       case "Popup":
         return <MyMapboxPopup />;
-      case "Geofence":
-        return <MyMapboxGeofence />;
+      // case "Geofence":
+      //   return <MyMapboxGeofence />;
       case "Basic":
         return <MyMapComponent />;
       case "PopupWithLayers":
