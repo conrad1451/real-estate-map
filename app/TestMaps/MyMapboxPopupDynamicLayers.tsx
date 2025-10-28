@@ -1,5 +1,7 @@
 "use client";
 
+// MyMapboxPopupDynamicLayers.tsx
+
 // CHQ: Gemini AI created
 
 import * as React from "react";
@@ -12,6 +14,7 @@ import Map, {
 } from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
 
+import { useNewDataFetch } from "../hooks/useNewDataFetch";
 // 1. Define the style properties for the dynamic layer (e.g., points)
 const pointLayerStyle: LayerProps = {
   id: "dynamic-points",
@@ -36,35 +39,13 @@ export function MyMapboxDynamicLayer() {
   const MAPBOX_TOKEN =
     process.env.NEXT_PUBLIC_MAPBOX_KEY || "YOUR_MAPBOX_PUBLIC_TOKEN_HERE";
 
-  // 3. Function to simulate fetching or generating new data
-  const fetchNewData = useCallback(() => {
-    // This is where you would typically make an API call (e.g., using fetch or axios)
-    // For this example, we'll generate 5 random points near the initial view center.
-    const newFeatures = Array.from({ length: 5 }).map((_, index) => ({
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        // Generate random long/lat around initial center (-100, 40)
-        coordinates: [
-          -100 + (Math.random() - 0.5) * 10, // Longitude +/- 5
-          40 + (Math.random() - 0.5) * 5, // Latitude +/- 2.5
-        ],
-      },
-      properties: {
-        name: `Dynamic Point ${index + 1}`,
-      },
-    }));
+  // CHQ: Gemini AI called the hook here
+  const fetchNewData = useNewDataFetch(setDynamicGeoJson);
 
-    setDynamicGeoJson({
-      type: "FeatureCollection",
-      features: newFeatures,
-    });
-  }, []);
-
-  // 4. Initial data load (optional, but good practice)
+  // 3. Initial data load (call the returned function inside useEffect)
   React.useEffect(() => {
-    fetchNewData(); // Load data when the component mounts
-  }, [fetchNewData]);
+    fetchNewData(setDynamicGeoJson); // Call the function returned by the hook
+  }, [fetchNewData]); // Dependency array: fetchNewData is stable due to useCallback in the hook
 
   return (
     <div>
