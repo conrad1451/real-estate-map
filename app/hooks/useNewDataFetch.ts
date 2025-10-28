@@ -1,13 +1,8 @@
 // useNewDataFetch.ts
 
 import { useCallback } from "react";
-// CHQ: Gemini AI replaced interface
-// interface FetchDataInfo { setGeoJSON: () => void; }
-// Assuming a general type for GeoJSON FeatureCollection
-interface GeoJsonFeatureCollection {
-  type: "FeatureCollection";
-  features: Array<any>; // Use a more specific type if possible
-}
+// CHQ: Gemini AI exported interface
+import { GeoJsonFeatureCollection } from "../utils/dataTypes";
 
 // CHQ: Gemini debugged hook
 export const useNewDataFetch = (

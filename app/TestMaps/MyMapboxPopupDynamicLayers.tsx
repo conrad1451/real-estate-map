@@ -12,14 +12,7 @@ import Map, {
 } from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-// Define the expected prop interface
-interface GeoJsonFeatureCollection {
-  type: "FeatureCollection";
-  features: Array<any>;
-}
-interface MyMapboxDynamicLayerProps {
-  dynamicGeoJson: GeoJsonFeatureCollection;
-}
+import { MyMapboxDynamicLayerProps } from "../utils/dataTypes";
 
 const pointLayerStyle: LayerProps = {
   id: "dynamic-points",

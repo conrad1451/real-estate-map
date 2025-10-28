@@ -5,37 +5,15 @@ import "./pagestyle.css";
 
 // CHQ: Gemini AI refactored to import hook into parent component
 // 🚨 Import the custom hook
+// import { useNewDataFetch } from "./hooks/useNewDataFetch";
 import { useNewDataFetch } from "./hooks/useNewDataFetch";
+import { GeoJsonFeatureCollection } from "./utils/dataTypes";
 
 import { MyMapComponent } from "./TestMaps/MyMapbox";
 import { MyMapboxPopup } from "./TestMaps/MyMapboxPopup";
 import { MyMapboxGeofence } from "./TestMaps/MyMapboxGeofence";
 import { MyMapboxPopupWithLayers } from "./TestMaps/MyMapboxPopupWithLayers";
 import { MyMapboxDynamicLayer } from "./TestMaps/MyMapboxPopupDynamicLayers";
-
-const SidebarControlsOld = ({ currentMap, setMapType }) => {
-  return (
-    <>
-      <h2>🗺️ Map Controls</h2>
-      {/* ... (Other map selection buttons) ... */}
-
-      <button
-        onClick={() => setMapType("PopupWithDyanmicLayers")}
-        disabled={currentMap === "PopupWithDyanmicLayers"}
-        style={{
-          margin: "5px",
-          padding: "10px",
-          display: "block",
-          width: "90%",
-        }}
-      >
-        Show PopupWithDyanmicLayers Map
-      </button>
-
-      {/* ... (Other map selection buttons) ... */}
-    </>
-  );
-};
 
 const SidebarControls = ({ currentMap, setMapType }) => {
   return (
@@ -110,10 +88,16 @@ const MyApp = function () {
   const [mapType, setMapType] = useState("Popup");
 
   // CHQ: Gemini AI: 1. STATE AND HOOK LIFTED UP: Define state for dynamic data
-  const [dynamicGeoJson, setDynamicGeoJson] = useState({
-    type: "FeatureCollection",
-    features: [], // Starts with an empty array
-  });
+  // const [dynamicGeoJson, setDynamicGeoJson] = useState({
+  //   type: "FeatureCollection",
+  //   features: [], // Starts with an empty array
+  // });
+
+  const [dynamicGeoJson, setDynamicGeoJson] =
+    useState<GeoJsonFeatureCollection>({
+      type: "FeatureCollection",
+      features: [], // Starts with an empty array
+    });
 
   // CHQ: Gemini AI: 2. HOOK CALL: Call the custom hook to get the stable fetch function
   const fetchNewData = useNewDataFetch(setDynamicGeoJson);
