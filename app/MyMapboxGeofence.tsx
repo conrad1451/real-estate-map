@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 // import Map from "react-map-gl/maplibre";
 import Map from "react-map-gl/mapbox";
@@ -20,8 +21,10 @@ export function MyMapboxGeofence() {
     latitude: 40,
     zoom: 3.5,
   });
+  const MAPBOX_TOKEN =
+    process.env.NEXT_PUBLIC_MAPBOX_KEY || "YOUR_MAPBOX_PUBLIC_TOKEN_HERE";
 
-  const onMove = React.useCallback(({ viewState: AView }) => {
+  const onMove = React.useCallback(({ viewState }) => {
     const newCenter = [viewState.longitude, viewState.latitude];
     // Only update the view state if the center is inside the geofence
     if (turf.booleanPointInPolygon(newCenter, GEOFENCE)) {
@@ -31,6 +34,7 @@ export function MyMapboxGeofence() {
 
   return (
     <Map
+      mapboxAccessToken={MAPBOX_TOKEN}
       {...viewState}
       onMove={onMove}
       mapStyle="mapbox://styles/mapbox/streets-v9"
