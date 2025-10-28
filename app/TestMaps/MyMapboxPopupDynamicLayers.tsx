@@ -2,10 +2,8 @@
 
 // MyMapboxPopupDynamicLayers.tsx
 
-// CHQ: Gemini AI created
-
 import * as React from "react";
-import { useState, useCallback } from "react";
+
 import Map, {
   Popup,
   Source,
@@ -14,55 +12,40 @@ import Map, {
 } from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import { useNewDataFetch } from "../hooks/useNewDataFetch";
-// 1. Define the style properties for the dynamic layer (e.g., points)
+// Define the expected prop interface
+interface GeoJsonFeatureCollection {
+  type: "FeatureCollection";
+  features: Array<any>;
+}
+interface MyMapboxDynamicLayerProps {
+  dynamicGeoJson: GeoJsonFeatureCollection;
+}
+
 const pointLayerStyle: LayerProps = {
   id: "dynamic-points",
-  type: "circle", // Use 'circle' for point data
-  source: "dynamic-data", // Must match the Source component's id
+  type: "circle",
+  source: "dynamic-data",
   paint: {
-    "circle-color": "#ff4500", // Orange color for the points
+    "circle-color": "#ff4500",
     "circle-radius": 6,
     "circle-stroke-width": 1,
     "circle-stroke-color": "#fff",
   },
 };
 
-export function MyMapboxDynamicLayer() {
-  const [showPopup, setShowPopup] = useState<boolean>(true);
-  // 2. State to hold the dynamic GeoJSON data
-  const [dynamicGeoJson, setDynamicGeoJson] = useState({
-    type: "FeatureCollection",
-    features: [], // Starts with an empty array
-  });
+// 1. Component accepts dynamicGeoJson as a prop
+export function MyMapboxDynamicLayer({
+  dynamicGeoJson,
+}: MyMapboxDynamicLayerProps) {
+  // Keep local state for the popup
+  const [showPopup, setShowPopup] = React.useState<boolean>(true);
 
   const MAPBOX_TOKEN =
     process.env.NEXT_PUBLIC_MAPBOX_KEY || "YOUR_MAPBOX_PUBLIC_TOKEN_HERE";
 
-  // CHQ: Gemini AI called the hook here
-  const fetchNewData = useNewDataFetch(setDynamicGeoJson);
-
-  // 3. Initial data load (call the returned function inside useEffect)
-  React.useEffect(() => {
-    fetchNewData(setDynamicGeoJson); // Call the function returned by the hook
-  }, [fetchNewData]); // Dependency array: fetchNewData is stable due to useCallback in the hook
-
   return (
     <div>
-      {/* Button to trigger the data refresh */}
-      <button
-        onClick={fetchNewData}
-        style={{
-          padding: "10px 20px",
-          marginBottom: "10px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-        }}
-      >
-        Fetch New Dynamic Data ({dynamicGeoJson.features.length} points)
-      </button>
+      {/* 2. Button has been REMOVED (it is now in page.tsx) */}
 
       <Map
         mapboxAccessToken={MAPBOX_TOKEN}
@@ -74,17 +57,15 @@ export function MyMapboxDynamicLayer() {
         style={{ width: 600, height: 400 }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
       >
-        {/* 5. The Source component uses the state variable */}
+        {/* 3. The Source component uses the prop data */}
         <Source
           id="dynamic-data"
           type="geojson"
-          data={dynamicGeoJson} // <--- The map updates whenever this prop changes
+          data={dynamicGeoJson} // <--- Uses the prop passed from the parent
         />
 
-        {/* 6. The Layer component displays the data */}
         <Layer {...pointLayerStyle} />
 
-        {/* Existing Popup component */}
         {showPopup && (
           <Popup
             longitude={-100}

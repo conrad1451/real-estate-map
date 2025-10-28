@@ -1,6 +1,11 @@
 "use client";
-import { useState } from "react"; // 1. Import useState hook
+// page.tsx
+import { useState, useEffect } from "react"; // 🚨 Added useEffect
 import "./pagestyle.css";
+
+// CHQ: Gemini AI refactored to import hook into parent component
+// 🚨 Import the custom hook
+import { useNewDataFetch } from "./hooks/useNewDataFetch";
 
 import { MyMapComponent } from "./TestMaps/MyMapbox";
 import { MyMapboxPopup } from "./TestMaps/MyMapboxPopup";
@@ -8,7 +13,30 @@ import { MyMapboxGeofence } from "./TestMaps/MyMapboxGeofence";
 import { MyMapboxPopupWithLayers } from "./TestMaps/MyMapboxPopupWithLayers";
 import { MyMapboxDynamicLayer } from "./TestMaps/MyMapboxPopupDynamicLayers";
 
-// CHQ: Gemini AI added Helper component for the sidebar to demonstrate interaction
+const SidebarControlsOld = ({ currentMap, setMapType }) => {
+  return (
+    <>
+      <h2>🗺️ Map Controls</h2>
+      {/* ... (Other map selection buttons) ... */}
+
+      <button
+        onClick={() => setMapType("PopupWithDyanmicLayers")}
+        disabled={currentMap === "PopupWithDyanmicLayers"}
+        style={{
+          margin: "5px",
+          padding: "10px",
+          display: "block",
+          width: "90%",
+        }}
+      >
+        Show PopupWithDyanmicLayers Map
+      </button>
+
+      {/* ... (Other map selection buttons) ... */}
+    </>
+  );
+};
+
 const SidebarControls = ({ currentMap, setMapType }) => {
   return (
     <>
@@ -79,10 +107,23 @@ const SidebarControls = ({ currentMap, setMapType }) => {
 };
 
 const MyApp = function () {
-  // CHQ: Gemini added state to manage which map component is rendered
   const [mapType, setMapType] = useState("Popup");
 
-  // CHQ: Gemini AI added Function to conditionally render the correct map component
+  // CHQ: Gemini AI: 1. STATE AND HOOK LIFTED UP: Define state for dynamic data
+  const [dynamicGeoJson, setDynamicGeoJson] = useState({
+    type: "FeatureCollection",
+    features: [], // Starts with an empty array
+  });
+
+  // CHQ: Gemini AI: 2. HOOK CALL: Call the custom hook to get the stable fetch function
+  const fetchNewData = useNewDataFetch(setDynamicGeoJson);
+
+  // CHQ: Gemini AI: 3. INITIAL DATA LOAD: Use useEffect to call the function on mount
+  useEffect(() => {
+    fetchNewData(); // 🚨 Correctly call the returned function
+  }, [fetchNewData]); // fetchNewData is stable due to useCallback in the hook
+
+  // Function to conditionally render the correct map component
   const renderMap = () => {
     switch (mapType) {
       case "Popup":
@@ -94,7 +135,8 @@ const MyApp = function () {
       case "PopupWithLayers":
         return <MyMapboxPopupWithLayers />;
       case "PopupWithDyanmicLayers":
-        return <MyMapboxPopupWithLayers />;
+        // CHQ: Gemini AI: 4. PASS PROPS: Render the dynamic map and pass the data state
+        return <MyMapboxDynamicLayer dynamicGeoJson={dynamicGeoJson} />;
       default:
         return <p>Select a map type from the sidebar.</p>;
     }
@@ -108,14 +150,31 @@ const MyApp = function () {
         </div>
         <div className="container">
           <div className="sidebar">
-            {/* Pass state and state setter to the sidebar component */}
             <SidebarControls currentMap={mapType} setMapType={setMapType} />
           </div>
 
           <div className="content">
             <h2>Main Content: Map Integration</h2>
-            {/* 4. Use the renderMap function to display the correct layer */}
             {renderMap()}
+
+            {/* 5. CHQ: Gemini put button here: Conditionally render and wire the button */}
+            {mapType === "PopupWithDyanmicLayers" && (
+              <button
+                onClick={fetchNewData} // 🚨 Wire button to the stable fetch function
+                style={{
+                  margin: "10px 5px", // Adjusted margin for better placement
+                  padding: "10px",
+                  display: "block",
+                  width: "90%",
+                  backgroundColor: "#007bff",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                }}
+              >
+                Generate random points ({dynamicGeoJson.features.length} points)
+              </button>
+            )}
           </div>
         </div>
         <div className="footer">
