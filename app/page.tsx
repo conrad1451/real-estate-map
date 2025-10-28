@@ -5,6 +5,7 @@ import "./pagestyle.css";
 import { MyMapComponent } from "./TestMaps/MyMapbox";
 import { MyMapboxPopup } from "./TestMaps/MyMapboxPopup";
 import { MyMapboxGeofence } from "./TestMaps/MyMapboxGeofence";
+import { MyMapboxPopupWithLayers } from "./TestMaps/MyMapboxPopupWithLayers";
 
 // CHQ: Gemini AI added Helper component for the sidebar to demonstrate interaction
 const SidebarControls = ({ currentMap, setMapType }) => {
@@ -23,6 +24,18 @@ const SidebarControls = ({ currentMap, setMapType }) => {
         }}
       >
         Show Popup Map
+      </button>
+      <button
+        onClick={() => setMapType("PopupWithLayers")}
+        disabled={currentMap === "PopupWithLayers"}
+        style={{
+          margin: "5px",
+          padding: "10px",
+          display: "block",
+          width: "90%",
+        }}
+      >
+        Show PopupWithLayers Map
       </button>
       <button
         onClick={() => setMapType("Geofence")}
@@ -65,6 +78,8 @@ const MyApp = function () {
         return <MyMapboxGeofence />;
       case "Basic":
         return <MyMapComponent />;
+      case "PopupWithLayers":
+        return <MyMapboxPopupWithLayers />;
       default:
         return <p>Select a map type from the sidebar.</p>;
     }
