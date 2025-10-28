@@ -2,6 +2,8 @@ import "./pagestyle.css";
 
 import { MyMapComponent } from "./MyMapbox";
 
+import { MyMapboxPopup } from "./MyMapboxPopup";
+
 const MyApp = function () {
   // return <div className="header"> </div>;
 
@@ -22,7 +24,8 @@ const MyApp = function () {
 
           <div className="content">
             <h2>Main Content</h2>
-            <MyMapComponent />
+            {/* <MyMapComponent /> */}
+            <MyMapboxPopup />
           </div>
         </div>
         <div className="footer">
