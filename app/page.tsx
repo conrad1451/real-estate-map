@@ -4,6 +4,8 @@ import { MyMapComponent } from "./MyMapbox";
 
 import { MyMapboxPopup } from "./MyMapboxPopup";
 
+import { MyMapboxGeofence } from "./MyMapboxGeofence";
+
 const MyApp = function () {
   // return <div className="header"> </div>;
 
@@ -25,7 +27,8 @@ const MyApp = function () {
           <div className="content">
             <h2>Main Content</h2>
             {/* <MyMapComponent /> */}
-            <MyMapboxPopup />
+            {/* <MyMapboxPopup /> */}
+            <MyMapboxGeofence />
           </div>
         </div>
         <div className="footer">
