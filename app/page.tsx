@@ -3,27 +3,18 @@
 import { useState, useEffect } from "react";
 import "./pagestyle.css";
 
-// CHQ: Gemini AI added
-import type { SetStateAction } from "react";
-
 // CHQ: Gemini AI refactored to import hook into parent component
-// 🚨 Import the custom hook
-// import { useNewDataFetch } from "./hooks/useNewDataFetch";
 import { useNewDataFetch } from "./hooks/useNewDataFetch";
-import { GeoJsonFeatureCollection } from "./utils/dataTypes";
+import {
+  GeoJsonFeatureCollection,
+  SidebarControlsProps,
+} from "./utils/dataTypes";
 
 import { MyMapComponent } from "./TestMaps/MyMapbox";
 import { MyMapboxPopup } from "./TestMaps/MyMapboxPopup";
 import { MyMapboxGeofence } from "./TestMaps/MyMapboxGeofence";
 import { MyMapboxPopupWithLayers } from "./TestMaps/MyMapboxPopupWithLayers";
 import { MyMapboxDynamicLayer } from "./TestMaps/MyMapboxPopupDynamicLayers";
-
-// CHQ: create new interface for sidebar controls
-interface SidebarControlsProps {
-  currentMap: string;
-  // setMapType is a state setter function for a string state
-  setMapType: React.Dispatch<SetStateAction<string>>;
-}
 
 const SidebarControls = ({ currentMap, setMapType }: SidebarControlsProps) => {
   return (
