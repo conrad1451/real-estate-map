@@ -1,7 +1,10 @@
 "use client";
 // page.tsx
-import { useState, useEffect } from "react"; // 🚨 Added useEffect
+import { useState, useEffect } from "react";
 import "./pagestyle.css";
+
+// CHQ: Gemini AI added
+import type { SetStateAction } from "react";
 
 // CHQ: Gemini AI refactored to import hook into parent component
 // 🚨 Import the custom hook
@@ -15,7 +18,14 @@ import { MyMapboxGeofence } from "./TestMaps/MyMapboxGeofence";
 import { MyMapboxPopupWithLayers } from "./TestMaps/MyMapboxPopupWithLayers";
 import { MyMapboxDynamicLayer } from "./TestMaps/MyMapboxPopupDynamicLayers";
 
-const SidebarControls = ({ currentMap, setMapType }) => {
+// CHQ: create new interface for sidebar controls
+interface SidebarControlsProps {
+  currentMap: string;
+  // setMapType is a state setter function for a string state
+  setMapType: React.Dispatch<SetStateAction<string>>;
+}
+
+const SidebarControls = ({ currentMap, setMapType }: SidebarControlsProps) => {
   return (
     <>
       <h2>🗺️ Map Controls</h2>
@@ -104,7 +114,7 @@ const MyApp = function () {
 
   // CHQ: Gemini AI: 3. INITIAL DATA LOAD: Use useEffect to call the function on mount
   useEffect(() => {
-    fetchNewData(); // 🚨 Correctly call the returned function
+    fetchNewData(); //
   }, [fetchNewData]); // fetchNewData is stable due to useCallback in the hook
 
   // Function to conditionally render the correct map component
@@ -144,7 +154,7 @@ const MyApp = function () {
             {/* 5. CHQ: Gemini put button here: Conditionally render and wire the button */}
             {mapType === "PopupWithDyanmicLayers" && (
               <button
-                onClick={fetchNewData} // 🚨 Wire button to the stable fetch function
+                onClick={fetchNewData} //
                 style={{
                   margin: "10px 5px", // Adjusted margin for better placement
                   padding: "10px",
