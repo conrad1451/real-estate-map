@@ -19,6 +19,10 @@ export function MyMapComponent() {
       }}
       style={{ width: 600, height: 400 }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
+      // StyleSpecification="mapbox://styles/mapbox/streets-v9"
     />
   );
+
+  /**  Property 'StyleSpecification' does not exist on type 'IntrinsicAttributes & MapInitOptions & Partial<ViewState> & MapCallbacks & { mapboxAccessToken?: string | undefined; ... 10 more ...; cursor?: string | undefined; } & GlobalSettings & { ...; } & RefAttributes<...>'.ts(2322)
+   */
 }
