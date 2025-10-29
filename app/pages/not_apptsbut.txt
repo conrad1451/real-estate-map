@@ -1,0 +1,29 @@
+// pages/_app.js (for Pages Router)
+// import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client/react";
+import { gql } from "@apollo/client";
+import client from "../lib/apollo-client";
+
+function MyApp({ Component, pageProps }) {
+  client
+    .query({
+      query: gql`
+        query GetLocations {
+          locations {
+            id
+            name
+            description
+            photo
+          }
+        }
+      `,
+    })
+    .then((result) => console.log(result));
+  return (
+    <ApolloProvider client={client}>
+      <Component {...pageProps} />
+    </ApolloProvider>
+  );
+}
+
+export default MyApp;
