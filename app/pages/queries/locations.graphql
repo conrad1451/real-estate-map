@@ -1,0 +1,10 @@
+# app/pages/queries/locations.graphql
+
+query GetLocations {
+  locations {
+    id
+    name
+    description
+    photo
+  }
+}

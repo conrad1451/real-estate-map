@@ -6,6 +6,13 @@
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
 
+interface Location {
+  id: string;
+  name: string;
+  description: string;
+  photo: string;
+}
+
 const GET_HELLO = gql`
   query GetHello {
     hello

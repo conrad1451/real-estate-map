@@ -14,7 +14,7 @@ import { MyMapComponent } from "./TestMaps/MyMapbox";
 import { MyMapboxPopup } from "./TestMaps/MyMapboxPopup";
 import { MyMapboxPopupWithLayers } from "./TestMaps/MyMapboxPopupWithLayers";
 import { MyMapboxDynamicLayer } from "./TestMaps/MyMapboxPopupDynamicLayers";
-import { MyMapboxLayersAlt } from "./TestMaps/MyMapboxLayersAlt";
+// import { MyMapboxLayersAlt } from "./TestMaps/MyMapboxLayersAlt";
 
 const SidebarControls = ({ currentMap, setMapType }: SidebarControlsProps) => {
   return (
@@ -57,7 +57,7 @@ const SidebarControls = ({ currentMap, setMapType }: SidebarControlsProps) => {
       >
         Show PopupWithDyanmicLayers Map
       </button>
-      <button
+      {/* <button
         onClick={() => setMapType("PopupWithLayersAlt")}
         disabled={currentMap === "PopupWithLayersAlt"}
         style={{
@@ -68,7 +68,7 @@ const SidebarControls = ({ currentMap, setMapType }: SidebarControlsProps) => {
         }}
       >
         Show PopupWithLayersAlt Map
-      </button>
+      </button> */}
       <button
         onClick={() => setMapType("Basic")}
         disabled={currentMap === "Basic"}
@@ -117,8 +117,8 @@ const MyApp = function () {
         return <MyMapComponent />;
       case "PopupWithLayers":
         return <MyMapboxPopupWithLayers />;
-      case "PopupWithLayersAlt":
-        return <MyMapboxLayersAlt />;
+      // case "PopupWithLayersAlt":
+      //   return <MyMapboxLayersAlt />;
       case "PopupWithDyanmicLayers":
         // CHQ: Gemini AI: 4. PASS PROPS: Render the dynamic map and pass the data state
         return <MyMapboxDynamicLayer dynamicGeoJson={dynamicGeoJson} />;
