@@ -5,8 +5,6 @@
 type Query {
   "Fetches a list of all real estate locations."
   locations: [Location!]!
-  "Fetches a list of all episodes, likely for a podcast or video series."
-  episodes: [Episode!]!
 }
 
 # The Location type represents a single property listing.
@@ -15,11 +13,4 @@ type Location {
   name: String!
   description: String
   photo: String # Assuming this is a URL or file path string
-}
-
-# A new type definition to support the 'episodes' query.
-type Episode {
-  id: ID!
-  name: String!
-  air_date: String!
 }

@@ -1,9 +1,0 @@
-# app/queries/episodes.graphql
-
-query GetEpisodes {
-  episodes {
-    id
-    name
-    air_date
-  }
-}
