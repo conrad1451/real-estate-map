@@ -8,15 +8,15 @@ const config: CodegenConfig = {
   // 1. Define where your GraphQL schema is located.
   schema: "./app/schema.graphql",
 
-  // documents: "app/**/*.graphql",
-  documents: "app/pages/**/*.graphql",
   // 2. Define where your GraphQL documents (queries, mutations, etc.) are.
   documents: "app/**/*.graphql",
 
   // 3. The essential 'generates' field
   generates: {
-    // Define the output file path and the plugins to use for it
-    "./src/gql/types.ts": {
+    // UPDATED OUTPUT PATH to match the import in LocationList.tsx
+    // The component uses 'import ... from "../generated/graphql"', so we put the output
+    // in the 'app/generated' directory relative to the project root.
+    "./app/generated/graphql.tsx": {
       // These are the plugins that will generate the code
       plugins: [
         "typescript",
@@ -25,7 +25,8 @@ const config: CodegenConfig = {
       ],
       // Optional: configuration options for the plugins
       config: {
-        // e.g., 'withHooks' or 'skipTypename'
+        // e.g., 'withHooks: true' if you want Apollo React hooks
+        withHooks: true,
       },
     },
   },
