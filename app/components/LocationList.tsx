@@ -23,9 +23,7 @@ const LocationList = () => {
       {/* 3. FIX: Explicitly type 'location' using the helper type LocationItem */}
       {/* We use 'data?.locations' and NonNullable above to safely handle potential null/undefined values. */}
       {data?.locations?.map((location: LocationItem) => (
-        <li key={location.id}>
-          {location.name} - {location.air_date}
-        </li>
+        <li key={location.id}>{location.name}</li>
       ))}
     </ul>
   );
