@@ -23,10 +23,16 @@ const config: CodegenConfig = {
         "typescript-operations",
         "typescript-react-apollo",
       ],
-      // Optional: configuration options for the plugins
+      // FIX: Added configuration to ensure compatibility with Apollo Client v4.
       config: {
-        // e.g., 'withHooks: true' if you want Apollo React hooks
+        // Ensure only modern hooks are generated
         withHooks: true,
+        withHOC: false,
+        withComponent: false,
+        // Explicitly target the @apollo/client import path
+        apolloHooksImport: "@apollo/client",
+        // This setting often nudges it toward the correct types for v4
+        dedupeOperationSuffix: true,
       },
     },
   },
