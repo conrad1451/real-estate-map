@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
-// CHQ: Gemini AI corrected
 const nextConfig: NextConfig = {
+  // CHQ: Gemini AI corrected
   // ... (existing config properties)
 
   // FIX: Resolve Apollo Server v4 dependency issue during Next.js build
