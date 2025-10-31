@@ -2,8 +2,7 @@
 
 // CHQ: Gemini AI generated
 
-import { gql } from "apollo-server-micro";
-
+import { gql } from "@apollo/client";
 // Define your GraphQL schema here
 export const typeDefs = gql`
   type Location {
