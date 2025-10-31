@@ -1,12 +1,10 @@
-// // Note: If you write queries inside of TypeScript/JavaScript files using gql tags, update the documents field to use a glob that matches those files, such as "src/**/*.{ts,tsx}".
-
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  // schema: "http://localhost:4000/graphql",
-  // schema: "./app/pages/schema/queries/locations.graphql",
-  // 1. Define where your GraphQL schema is located.
-  schema: "./app/schema.graphql",
+  // FIX: Updated schema path to use a robust glob pattern.
+  // This ensures that all .graphql files in the app/graphql directory are included,
+  // resolving the schema loading error in the Vercel build environment.
+  schema: "app/graphql/**/*.graphql",
 
   // 2. Define where your GraphQL documents (queries, mutations, etc.) are.
   documents: "app/**/*.graphql",
@@ -23,16 +21,14 @@ const config: CodegenConfig = {
         "typescript-operations",
         "typescript-react-apollo",
       ],
-      // FIX: Added configuration to ensure compatibility with Apollo Client v4.
+      // Optional: configuration options for the plugins
       config: {
-        // Ensure only modern hooks are generated
+        // Fix for Apollo Client v4 type mismatch
+        apolloHooksImport: "@apollo/client",
         withHooks: true,
+        // Disable HOC and Component wrappers which often cause v4 type issues
         withHOC: false,
         withComponent: false,
-        // Explicitly target the @apollo/client import path
-        apolloHooksImport: "@apollo/client",
-        // This setting often nudges it toward the correct types for v4
-        dedupeOperationSuffix: true,
       },
     },
   },
