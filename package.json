@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    // FIXED: This now runs the codegen script first.
+    "build": "npm run codegen && next build --turbopack",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    // Using your specific command: graphql-codegen --config codegen.ts
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
