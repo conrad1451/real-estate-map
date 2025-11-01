@@ -23,6 +23,7 @@ const config: CodegenConfig = {
       ],
       // Optional: configuration options for the plugins
       config: {
+        apolloClientCommonImport: "@apollo/client",
         // CHQ: Gemini AI changed hooks import to client/react/hooks
         apolloHooksImport: "@apollo/client/react/hooks",
         withHooks: true,
