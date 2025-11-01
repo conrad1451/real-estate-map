@@ -23,10 +23,11 @@ const config: CodegenConfig = {
       ],
       // Optional: configuration options for the plugins
       config: {
-        // Fix for Apollo Client v4 type mismatch
-        apolloHooksImport: "@apollo/client",
+        // CHQ: Gemini AI changed hooks import to client/react/hooks
+        // This is necessary because QueryHookOptions is often not exported from '@apollo/client'
+        // or '@apollo/client/core' in the latest versions.
+        apolloHooksImport: "@apollo/client/react/hooks",
         withHooks: true,
-        // Disable HOC and Component wrappers which often cause v4 type issues
         withHOC: false,
         withComponent: false,
       },
