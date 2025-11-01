@@ -24,8 +24,6 @@ const config: CodegenConfig = {
       // Optional: configuration options for the plugins
       config: {
         // CHQ: Gemini AI changed hooks import to client/react/hooks
-        // This is necessary because QueryHookOptions is often not exported from '@apollo/client'
-        // or '@apollo/client/core' in the latest versions.
         apolloHooksImport: "@apollo/client/react/hooks",
         withHooks: true,
         withHOC: false,
