@@ -1,22 +1,25 @@
-// In codegen.ts
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
+  // FIX: Updated schema path to use a robust glob pattern.
   schema: "app/graphql/**/*.graphql",
+
+  // 2. Define where your GraphQL documents (queries, mutations, etc.) are.
   documents: "app/**/*.graphql",
 
-  // CHQ: Gemini AI corrected generates section of config
+  // 3. The essential 'generates' field
   generates: {
     // 1. Change the output to a DIRECTORY, not a single file.
     // The preset will create graphql.ts, fragments.ts, etc., inside this folder.
     "./app/generated/": {
-      // 2. Use the modern client preset
+      // 2. Use the modern client preset instead of individual plugins
       preset: "client",
 
-      // 3. (Optional but recommended) Specify the client for optimization
       config: {
+        // Specify the client for integration with Apollo 4.0.8
         client: "apollo",
-        // We no longer need apolloHooksImport or withHooks here!
+        // This configuration uses TypedDocumentNodes (TDO) instead of generated hooks,
+        // which solves the QueryHookOptions compatibility error.
       },
     },
   },
