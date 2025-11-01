@@ -2,7 +2,7 @@
 
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 // import { server } from "../../../apollo-client-server";
-import { server } from "../../lib/apollo-client-server";
+import { server } from "../../lib/apollo-client-server-v1";
 
 // Import your schema and resolvers structure (placeholders for now)
 // import { typeDefs } from "../../graphql/typeDefs";

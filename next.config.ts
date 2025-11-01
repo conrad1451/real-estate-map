@@ -1,30 +1,27 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  // Existing config properties go here (e.g., reactStrictMode: true, etc.)
-
-  // FIX: Resolve Apollo Server v4 dependency issue during Next.js build
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // This function allows you to hook into the webpack configuration
   webpack: (config, { isServer }) => {
-    if (isServer) {
-      // Ensure existing externals are an array (or initialize as empty)
-      if (!config.externals) {
-        config.externals = [];
-      }
-      if (!Array.isArray(config.externals)) {
-        // Handle cases where externals might be an object or function by merging
-        // For simplicity and effectiveness on Vercel, we'll ensure it's an array for our package.
-        config.externals = [config.externals];
-      }
-
-      const newExternals = ["@yaacovcr/transform"];
-
-      // Add the Apollo-specific external package to the beginning of the list
-      // We use unshift to ensure Next.js sees this exclusion early.
-      config.externals = newExternals.concat(config.externals);
+    if (!isServer) {
+      // For the client-side bundle (browser), we want to alias
+      // the problematic dependency to 'false'. This tells Webpack to
+      // treat the module as an external dependency that doesn't need to
+      // be bundled, effectively resolving the dynamic require without errors.
+      // Since this dependency is only relevant for the server (Node.js)
+      // and Apollo is using it optionally, ignoring it on the client is safe.
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "@yaacovcr/transform": false,
+      };
+    } else {
+      // For the server-side bundle, we may need to specifically exclude it as an external.
+      // This is often not strictly necessary as Vercel's Node environment usually handles it,
+      // but if the issue persists on the server build, this can help.
+      config.externals = [...config.externals, "@yaacovcr/transform"];
     }
-    // Return the modified config
+
     return config;
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
