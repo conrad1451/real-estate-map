@@ -1,0 +1,16 @@
+# This file defines the types for your GraphQL API.
+# It is used by graphql-codegen to understand the structure of your data.
+
+# The root Query type defines all available read operations.
+type Query {
+  "Fetches a list of all real estate locations."
+  locations: [Location!]!
+}
+
+# The Location type represents a single property listing.
+type Location {
+  id: ID!
+  name: String!
+  description: String
+  photo: String # Assuming this is a URL or file path string
+}

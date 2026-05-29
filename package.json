@@ -1,26 +1,41 @@
 {
   "name": "real-estate-map",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "npm run codegen && next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "next": "15.5.3",
+    "@apollo/client": "^4.0.9",
+    "@apollo/server": "^5.1.0",
+    "@as-integrations/next": "^4.1.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.2",
+    "@turf/turf": "^7.2.0",
+    "@types/mapbox-gl": "^3.4.1",
+    "graphql": "^16.11.0",
+    "mapbox-gl": "^3.15.0",
+    "next": "15.5.9",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "react-map-gl": "^8.1.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^6.0.1",
+    "@graphql-codegen/client-preset": "^5.1.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9.35.0",
+    "eslint": "^9.36.0",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
